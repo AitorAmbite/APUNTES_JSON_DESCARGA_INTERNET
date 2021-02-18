@@ -15,20 +15,23 @@ class GetAllFilms {
     companion object {
         suspend fun send(mainActivity : MainActivityInterface?) {
 
-            val client = OkHttpClient()
-            val url = "https://swapi.dev/api/films/"
+            val client = OkHttpClient() // creamos el cliente que nos permitira obtener datos de internet
+            val url = "https://swapi.dev/api/films/" // declaramos la url a la que llamaremos
+            // aqui creamos la request con el request builder , basicamente estamos creando lo que ejecutaremos para obtener datos de la api
             val request = Request.Builder()
                 .url(url)
                 .build()
-            val call = client.newCall(request)
+            val call = client.newCall(request) // llamamos a la request con el cliente
             call.enqueue(object : Callback {
+                // ejecutamos la peticion al servidor y en funcion de si falla o nos devuelve algo ejecutara una de las dos funciones
 
+                //en caso de fallar ejecuta esta
                 override fun onFailure(call: Call, e: IOException) {
                     e.printStackTrace()
                     Log.e("GetAllFilms", call.toString())
 
                 }
-
+                //en caso de obtener respuesta ejecuta esta
                 override fun onResponse(call: Call, response: Response) {
                     CoroutineScope(Dispatchers.IO).launch {
                         val bodyInString = response.body?.string()
