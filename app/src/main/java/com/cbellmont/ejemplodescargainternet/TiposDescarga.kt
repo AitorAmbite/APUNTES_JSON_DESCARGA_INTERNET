@@ -19,8 +19,8 @@ class TiposDescarga {
             .build()
         val call = client.newCall(request)
         val gson = Gson()
-        val itemType = object : TypeToken<CoinSpecific>(){}.type
-
+        val itemType = object : TypeToken<CoinSpecific>(){}.type // declaracion del tipo del json
+        // call.execute() es la ejecucion de la llamada a la api
         return gson.fromJson(call.execute().body?.string(),itemType)
     }
 }
